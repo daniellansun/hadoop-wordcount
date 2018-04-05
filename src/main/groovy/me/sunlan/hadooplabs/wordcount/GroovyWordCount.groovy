@@ -18,6 +18,7 @@ class GroovyWordCount {
         private final static IntWritable one = new IntWritable(1)
         private Text word = new Text()
 
+        @Override
         void map(Object key, Text value, org.apache.hadoop.mapreduce.Mapper.Context context
         ) throws IOException, InterruptedException {
             StringTokenizer itr = new StringTokenizer(value.toString())
@@ -32,6 +33,7 @@ class GroovyWordCount {
             extends Reducer<Text, IntWritable, Text, IntWritable> {
         private IntWritable result = new IntWritable()
 
+        @Override
         void reduce(Text key, Iterable<IntWritable> values,
                     org.apache.hadoop.mapreduce.Reducer.Context context
         ) throws IOException, InterruptedException {
