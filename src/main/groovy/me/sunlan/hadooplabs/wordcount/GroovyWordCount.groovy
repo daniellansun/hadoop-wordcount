@@ -9,6 +9,8 @@ import org.apache.hadoop.mapreduce.Mapper
 import org.apache.hadoop.mapreduce.Reducer
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat
+import org.apache.hadoop.mapreduce.Mapper.Context as MapperContext
+import org.apache.hadoop.mapreduce.Reducer.Context as ReducerContext
 
 class GroovyWordCount {
 
@@ -18,7 +20,7 @@ class GroovyWordCount {
         private final static IntWritable one = new IntWritable(1)
         private Text word = new Text()
 
-        void map(Object key, Text value, org.apache.hadoop.mapreduce.Mapper.Context context
+        void map(Object key, Text value, MapperContext context
         ) throws IOException, InterruptedException {
             StringTokenizer itr = new StringTokenizer(value.toString())
             while (itr.hasMoreTokens()) {
@@ -33,7 +35,7 @@ class GroovyWordCount {
         private IntWritable result = new IntWritable()
 
         void reduce(Text key, Iterable<IntWritable> values,
-                    org.apache.hadoop.mapreduce.Reducer.Context context
+                    ReducerContext context
         ) throws IOException, InterruptedException {
             int sum = 0
             for (IntWritable val : values) {
