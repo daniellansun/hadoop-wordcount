@@ -9,7 +9,7 @@ Word counting example for hadoop 3.0 with gradle.
 
 ### Setup
 1. download [hadoop 3.0.1](http://www.apache.org/dyn/closer.cgi/hadoop/common/hadoop-3.0.1/hadoop-3.0.1.tar.gz)
-2. set the environment variable "HADOOP_HOME" and "PATH"
+2. set the environment variable "HADOOP_HOME" and "PATH", e.g.
     ```bat
     SET HADOOP_HOME=D:\_DEV\hadoop-3.0.1
     SET PATH=%PATH%;%HADOOP_HOME%\bin;
