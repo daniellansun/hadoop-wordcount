@@ -1,0 +1,43 @@
+group 'me.sunlan.hadooplabs'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+
+repositories {
+    maven { url 'http://maven.aliyun.com/nexus/content/groups/public' }
+    mavenCentral()
+}
+
+ext {
+    hadoopVersion = '3.0.1'
+    groovyVersion = '2.4.15'
+    junitVersion = '4.12'
+}
+
+dependencies {
+    compile "org.apache.hadoop:hadoop-client:$hadoopVersion"
+    compile "org.apache.hadoop:hadoop-common:$hadoopVersion"
+    compile "org.codehaus.groovy:groovy-all:$groovyVersion"
+
+    testCompile "junit:junit:$junitVersion"
+}
+
+task cleanOutput(type: Delete) {
+    delete 'output'
+}
+
+task runJar(type: JavaExec, dependsOn: [cleanOutput, build]) {
+    main = 'org.apache.hadoop.util.RunJar'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'build/libs/hadoop-wordcount-1.0-SNAPSHOT.jar',
+            'me.sunlan.hadooplabs.wordcount.WordCount',
+            'input',
+            'output'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.6'
+}
