@@ -12,7 +12,6 @@ output/
 .gradle/
 .*.swp
 *.class
-bin/
 .settings/
 .classpath
 .project
