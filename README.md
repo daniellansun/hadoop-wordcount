@@ -17,6 +17,11 @@ Word counting example for hadoop 3.0 with gradle.
 3. extract the [winutil](https://github.com/steveloughran/winutils) binary files(`winutils.exe`, `hadoop.dll`) to `%HADOOP_HOME%\bin`
 
 ### Run:
+#### example in Java
 ```bat
 gradlew runJar
+```
+#### example in Groovy
+```bat
+gradlew runGroovyJar
 ```

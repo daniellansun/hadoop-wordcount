@@ -38,6 +38,15 @@ task runJar(type: JavaExec, dependsOn: [cleanOutput, build]) {
             'output'
 }
 
+task runGroovyJar(type: JavaExec, dependsOn: [cleanOutput, build]) {
+    main = 'org.apache.hadoop.util.RunJar'
+    classpath = sourceSets.main.runtimeClasspath
+    args 'build/libs/hadoop-wordcount-1.0-SNAPSHOT.jar',
+            'me.sunlan.hadooplabs.wordcount.GroovyWordCount',
+            'input',
+            'output'
+}
+
 task wrapper(type: Wrapper) {
     gradleVersion = '4.6'
 }
