@@ -13,7 +13,7 @@ repositories {
 
 ext {
     hadoopVersion = '3.0.1'
-    groovyVersion = '2.4.15'
+    groovyVersion = '3.0.0-alpha-2'
     junitVersion = '4.12'
 }
 
@@ -30,6 +30,10 @@ task cleanOutput(type: Delete) {
 }
 
 task runJar(type: JavaExec, dependsOn: [cleanOutput, build]) {
+		environment 'HADOOP_HOME', "$projectDir" // avoid java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset
+		environment 'PATH', "${System.getenv('PATH')};$projectDir/bin;"
+		
+
     main = 'org.apache.hadoop.util.RunJar'
     classpath = sourceSets.main.runtimeClasspath
     args 'build/libs/hadoop-wordcount-1.0-SNAPSHOT.jar',
@@ -39,6 +43,9 @@ task runJar(type: JavaExec, dependsOn: [cleanOutput, build]) {
 }
 
 task runGroovyJar(type: JavaExec, dependsOn: [cleanOutput, build]) {
+		environment 'HADOOP_HOME', "$projectDir" // avoid java.io.FileNotFoundException: HADOOP_HOME and hadoop.home.dir are unset
+		environment 'PATH', "${System.getenv('PATH')};$projectDir/bin;"
+
     main = 'org.apache.hadoop.util.RunJar'
     classpath = sourceSets.main.runtimeClasspath
     args 'build/libs/hadoop-wordcount-1.0-SNAPSHOT.jar',
@@ -48,5 +55,5 @@ task runGroovyJar(type: JavaExec, dependsOn: [cleanOutput, build]) {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '4.6'
+    gradleVersion = '4.7'
 }
