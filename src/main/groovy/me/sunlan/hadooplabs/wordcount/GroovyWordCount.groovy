@@ -62,7 +62,7 @@ class GroovyWordCount {
         Configuration conf = new Configuration()
         Job job = Job.getInstance(conf, "word count")
         job.with {
-        	jarByClass = WordCount
+        	jarByClass = GroovyWordCount
         	mapperClass = TokenizerMapper
         	combinerClass = IntSumReducer
         	reducerClass = IntSumReducer
