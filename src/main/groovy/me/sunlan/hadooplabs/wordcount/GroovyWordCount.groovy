@@ -34,10 +34,7 @@ class GroovyWordCount {
 
         @Override
         void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
-            int sum = 0
-            for (IntWritable val : values) {
-                sum += val.get()
-            }
+            int sum = values.collect(e -> e.get()).sum()
             result.set(sum)
             context.write(key, result)
         }
@@ -46,12 +43,14 @@ class GroovyWordCount {
     static void main(String[] args) throws Exception {
         Configuration conf = new Configuration()
         Job job = Job.getInstance(conf, "word count")
-        job.setJarByClass(WordCount.class)
-        job.setMapperClass(TokenizerMapper.class)
-        job.setCombinerClass(IntSumReducer.class)
-        job.setReducerClass(IntSumReducer.class)
-        job.setOutputKeyClass(Text.class)
-        job.setOutputValueClass(IntWritable.class)
+        job.with {
+        	jarByClass = WordCount
+        	mapperClass = TokenizerMapper
+        	combinerClass = IntSumReducer
+        	reducerClass = IntSumReducer
+        	outputKeyClass = Text
+        	outputValueClass = IntWritable
+        }
         FileInputFormat.addInputPath(job, new Path(args[0]))
         FileOutputFormat.setOutputPath(job, new Path(args[1]))
         System.exit(job.waitForCompletion(true) ? 0 : 1)
